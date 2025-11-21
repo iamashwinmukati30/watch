@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop Watch</title>
+    <style>
+        body {
+            background-color: burlywood;
+        }
+
+        #Watch {
+            font-size: 100px;
+            text-align: center;
+            align-content: center;
+        }
+
+        button {
+            padding: 30px;
+            margin: 20px;
+            margin-top: -20px;
+            font-size: 15px;
+            font-weight: 900;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 5px;
+
+        }
+
+        button:hover {
+            color: crimson;
+        }
+
+        .btn {
+
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 50px;
+            text-align: center;
+            margin-bottom: -50px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Stop Watch</h1>
+    <h2 id="Watch">00:00:00</h2>
+    <div class="btn">
+        <button onclick="starttime()">Start</button>
+        <button onclick="Pause()">Stop</button>
+        <button onclick="Reset()">Reset</button>
+    </div>
+
+
+    <script>
+        let stoptime;
+
+
+        let Watch = document.getElementById("Watch");
+
+        let ss = 0;
+        let mm = 0;
+        let hh = 0;
+        let ms = 0;
+        let runningtime = false;
+
+        function starttime() {
+            if (runningtime === true) {
+                return;
+            };
+                stoptime = setInterval(() => {
+                    runningtime=true;
+                    ms++;
+                    if (ms === 100) {
+                        ss++;
+                        ms = 0;
+                        if (ss === 60) {
+                            mm++
+                            ss = 0
+                            if (mm === 60) {
+                                hh++
+                                mm = 0
+                                
+                                if (hh == 12) {
+                                    hh = 0
+                                }
+                            }
+                        }
+                    }
+
+                    let time = `${hh}:${mm}:${ss}`
+                    Watch.innerText = time;
+                    padStart()
+
+
+
+
+                }, 10);
+
+            }
+            function Pause(){
+                clearInterval(stoptime)
+                runningtime=false;
+            }
+        
+        function Reset() {
+            ss = 0;
+            mm = 0;
+            hh = 0;
+            ms=0;
+            let time = `${hh}:${mm}:${ss}`
+            Watch.innerText = time;
+            padStart()
+            runningtime = false;
+
+            clearInterval(stoptime);
+
+        }
+        function padStart() {
+            let sec = String(ss).padStart(2, "0")
+            let min = String(mm).padStart(2, "0")
+            let hour = String(hh).padStart(2, "0")
+            let mili =String(ms).padStart(2,"0")
+            let pad = `${hour}:${min}:${sec}.${mili}`
+            Watch.innerText = pad
+        }
+
+
+    </script>
+</body>
+
+</html>
